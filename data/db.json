@@ -1,0 +1,76 @@
+{
+  "settings": {
+    "companyName": "INFRANOVIX TECHNOLOGIES",
+    "slogan": "INNOVATE. INTEGRATE. ELEVATE.",
+    "email": "info@infranovix.co.ke",
+    "supportEmail": "support@infranovix.co.ke",
+    "phone": "+254 (0) 700 123 456",
+    "whatsappNumber": "254700123456",
+    "officeLocation": "Westlands Commercial Hub, Nairobi, Kenya",
+    "operatingHours": "Monday – Friday: 8:00 AM – 5:30 PM (EAT)",
+    "postalAddress": "P.O. Box 45820-00100, Nairobi, Kenya",
+    "adminPin": "infranovix2026",
+    "photos": {
+      "hero": "/src/assets/images/office_daylight_workspace_1793452674957.jpg",
+      "aboutTeam": "/src/assets/images/strategy_meeting_whiteboard_1793452675937.jpg",
+      "portfolioEnterprise": "/src/assets/images/laptop_desk_dashboard_1793452677488.jpg",
+      "portfolioMobile": "/src/assets/images/person_holding_phone_app_1793452677022.jpg"
+    },
+    "social": {
+      "linkedin": "https://linkedin.com/company/infranovix",
+      "twitter": "https://x.com/infranovix",
+      "github": "https://github.com/infranovix",
+      "facebook": "https://facebook.com/infranovix"
+    }
+  },
+  "inquiries": [
+    {
+      "id": "INQ-101",
+      "name": "David Mwangi",
+      "email": "david.mwangi@apexlogistics.co.ke",
+      "phone": "+254 712 345 678",
+      "company": "Apex Logistics East Africa",
+      "service": "Business Software and Management Information Systems",
+      "budget": "KES 1,500,000 - 3,000,000",
+      "message": "We need a custom fleet tracking and warehouse inventory system integrated with our existing accounting package.",
+      "status": "In Review",
+      "createdAt": "2026-10-28T09:15:00Z"
+    },
+    {
+      "id": "INQ-102",
+      "name": "Amina Said",
+      "email": "amina@horizonhealth.or.ke",
+      "phone": "+254 733 987 654",
+      "company": "Horizon Community Health",
+      "service": "Mobile and Web Application Development",
+      "budget": "KES 800,000 - 1,500,000",
+      "message": "We are seeking to develop a Progressive Web App (PWA) for our rural clinic patient scheduling and medication dispensing.",
+      "status": "Contacted",
+      "createdAt": "2026-10-29T14:40:00Z"
+    }
+  ],
+  "quotes": [
+    {
+      "id": "QT-9041",
+      "fullName": "Brian Kiprop",
+      "email": "brian@finflowtech.com",
+      "phone": "+254 720 112 233",
+      "organization": "FinFlow Microfinance",
+      "category": "Mobile and Web Application Development",
+      "service": "Customer portals & Custom Web Application",
+      "timeline": "1 - 3 Months",
+      "budgetRange": "KES 2,000,000 - 4,000,000 ($15,000 - $30,000 USD)",
+      "currency": "KES",
+      "requirements": "Need an enterprise loan origination and customer repayment portal with M-Pesa automated reconciliation and SMS notifications.",
+      "hasDocuments": false,
+      "status": "Proposal Sent",
+      "createdAt": "2026-10-30T11:20:00Z"
+    }
+  ],
+  "newsletter": [
+    {
+      "email": "techlead@growthke.com",
+      "subscribedAt": "2026-10-27T10:00:00Z"
+    }
+  ]
+}
