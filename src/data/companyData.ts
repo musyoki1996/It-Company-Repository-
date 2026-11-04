@@ -51,6 +51,10 @@ export interface InsightArticle {
 export const COMPANY_IDENTITY = {
   name: 'INFRANOVIX TECHNOLOGIES',
   slogan: 'INNOVATE. INTEGRATE. ELEVATE.',
+  phone: '0714664379',
+  formattedPhone: '+254 (0) 714 664 379',
+  whatsappNumber: '254714664379',
+  email: 'info@infranovix.co.ke',
   mission: 'To empower businesses and individuals through innovative, accessible, reliable, and scalable technology solutions.',
   vision: 'To become a trusted technology partner driving digital innovation and transformation across Africa and beyond.',
   coreValues: [

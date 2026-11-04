@@ -1,13 +1,13 @@
 {
-  "name": "react-example",
-  "private": true,
+  "name": "infranovix-technologies",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build",
+    "build": "vite build && esbuild server.ts --platform=node --packages=external --format=esm --outfile=server.js",
     "preview": "vite preview",
-    "start": "tsx server.ts",
+    "start": "node server.js",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },

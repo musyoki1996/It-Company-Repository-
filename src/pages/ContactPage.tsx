@@ -81,7 +81,7 @@ export const ContactPage: React.FC = () => {
     }
   };
 
-  const whatsappUrl = `https://wa.me/254700123456?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/254714664379?text=${encodeURIComponent(
     'Hello Infranovix Technologies, I would like to schedule a technical consultation regarding our project.'
   )}`;
 
@@ -147,10 +147,10 @@ export const ContactPage: React.FC = () => {
                 <Phone className="w-5 h-5 text-[#FFC400] shrink-0 mt-0.5" />
                 <div className="text-xs">
                   <span className="text-white font-medium block mb-0.5">Telephone Dispatch</span>
-                  <a href="tel:+254700123456" className="text-slate-300 hover:text-white transition-colors block font-mono">
-                    +254 (0) 700 123 456
+                  <a href="tel:+254714664379" className="text-slate-300 hover:text-white transition-colors block font-mono">
+                    +254 (0) 714 664 379
                   </a>
-                  <span className="text-slate-500 block text-[11px] mt-0.5">Standard carrier rates apply</span>
+                  <span className="text-slate-500 block text-[11px] mt-0.5">Direct line: 0714 664 379</span>
                 </div>
               </div>
 

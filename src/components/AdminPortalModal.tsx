@@ -600,7 +600,7 @@ export const AdminPortalModal: React.FC<AdminPortalModalProps> = ({ isOpen, onCl
                   </div>
                   <div>
                     <label className="text-xs font-semibold text-slate-400 block mb-1">
-                      WhatsApp International Number (digits only, e.g. 254700123456)
+                      WhatsApp International Number (digits only, e.g. 254714664379)
                     </label>
                     <input
                       type="text"
