@@ -80,7 +80,7 @@ app.get('/api/settings', (req: Request, res: Response) => {
 app.post('/api/auth/login', (req: Request, res: Response) => {
   const { pin } = req.body;
   const db = readDB();
-  const configuredPin = db.settings?.adminPin || 'infranovix2026';
+  const configuredPin = process.env.ADMIN_PIN || db.settings?.adminPin || 'infranovix2026';
   if (pin === configuredPin) {
     res.json({ success: true, token: 'inx_admin_session_' + Date.now() });
   } else {
@@ -243,21 +243,53 @@ app.get('/api/stats', (req: Request, res: Response) => {
   });
 });
 
+// Download cPanel deployment zip bundle
+app.get(['/download/bundle', '/api/download-bundle'], (req: Request, res: Response) => {
+  const candidates = [
+    path.join(__dirname, 'public', 'infranovix-cpanel-deploy.zip'),
+    path.join(__dirname, 'dist', 'infranovix-cpanel-deploy.zip'),
+    path.join(__dirname, 'infranovix-cpanel-deploy.zip')
+  ];
+  const found = candidates.find(p => fs.existsSync(p));
+  if (found) {
+    res.download(found, 'infranovix-cpanel-deploy.zip');
+  } else {
+    res.status(404).send('Deployment bundle not found.');
+  }
+});
+
+
 // --- SERVER SETUP & VITE INTEGRATION ---
 async function startServer() {
-  const isProduction = process.env.NODE_ENV === 'production';
+  const distPath = path.join(__dirname, 'dist');
+  const hasDist = fs.existsSync(path.join(distPath, 'index.html'));
+
+  // In production (or on cPanel Passenger / Docker), serve compiled dist
+  const isProduction =
+    process.env.NODE_ENV === 'production' ||
+    Boolean(process.env.PASSENGER_APP_ENV) ||
+    Boolean(process.env.PORT && process.env.PORT !== '3000') ||
+    (hasDist && !process.env.npm_lifecycle_event?.includes('dev'));
 
   if (!isProduction) {
-    // Development mode with Vite Middleware
-    const { createServer: createViteServer } = await import('vite');
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
+    try {
+      const { createServer: createViteServer } = await import('vite');
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: 'spa',
+      });
+      app.use(vite.middlewares);
+    } catch {
+      // Fallback if Vite is not present in runtime: serve compiled dist
+      if (hasDist) {
+        app.use(express.static(distPath));
+        app.get('*', (req: Request, res: Response) => {
+          res.sendFile(path.join(distPath, 'index.html'));
+        });
+      }
+    }
   } else {
     // Production static serving
-    const distPath = path.join(__dirname, 'dist');
     app.use(express.static(distPath));
     app.get('*', (req: Request, res: Response) => {
       res.sendFile(path.join(distPath, 'index.html'));

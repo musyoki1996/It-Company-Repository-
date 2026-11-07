@@ -66,7 +66,7 @@ app.get("/api/settings", (req, res) => {
 app.post("/api/auth/login", (req, res) => {
   const { pin } = req.body;
   const db = readDB();
-  const configuredPin = db.settings?.adminPin || "infranovix2026";
+  const configuredPin = process.env.ADMIN_PIN || db.settings?.adminPin || "infranovix2026";
   if (pin === configuredPin) {
     res.json({ success: true, token: "inx_admin_session_" + Date.now() });
   } else {
@@ -197,17 +197,40 @@ app.get("/api/stats", (req, res) => {
     lastActivity: (db.quotes || [])[0]?.createdAt || (db.inquiries || [])[0]?.createdAt || (/* @__PURE__ */ new Date()).toISOString()
   });
 });
-async function startServer() {
-  const isProduction = process.env.NODE_ENV === "production";
-  if (!isProduction) {
-    const { createServer: createViteServer } = await import("vite");
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa"
-    });
-    app.use(vite.middlewares);
+app.get(["/download/bundle", "/api/download-bundle"], (req, res) => {
+  const candidates = [
+    path.join(__dirname, "public", "infranovix-cpanel-deploy.zip"),
+    path.join(__dirname, "dist", "infranovix-cpanel-deploy.zip"),
+    path.join(__dirname, "infranovix-cpanel-deploy.zip")
+  ];
+  const found = candidates.find((p) => fs.existsSync(p));
+  if (found) {
+    res.download(found, "infranovix-cpanel-deploy.zip");
   } else {
-    const distPath = path.join(__dirname, "dist");
+    res.status(404).send("Deployment bundle not found.");
+  }
+});
+async function startServer() {
+  const distPath = path.join(__dirname, "dist");
+  const hasDist = fs.existsSync(path.join(distPath, "index.html"));
+  const isProduction = process.env.NODE_ENV === "production" || Boolean(process.env.PASSENGER_APP_ENV) || Boolean(process.env.PORT && process.env.PORT !== "3000") || hasDist && !process.env.npm_lifecycle_event?.includes("dev");
+  if (!isProduction) {
+    try {
+      const { createServer: createViteServer } = await import("vite");
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: "spa"
+      });
+      app.use(vite.middlewares);
+    } catch {
+      if (hasDist) {
+        app.use(express.static(distPath));
+        app.get("*", (req, res) => {
+          res.sendFile(path.join(distPath, "index.html"));
+        });
+      }
+    }
+  } else {
     app.use(express.static(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
